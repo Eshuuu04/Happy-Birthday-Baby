@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Baby</title>
+
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  background: linear-gradient(135deg, #fbe7e7, #f7c6c7);
+  color: #5a2a2a;
+  padding: 40px;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: 42px;
+  color: #b76e79;
+}
+
+h2 {
+  font-weight: normal;
+  margin-bottom: 30px;
+}
+
+button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  background: #b76e79;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+textarea {
+  padding: 12px;
+  width: 70%;
+  margin-top: 15px;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.hidden { display: none; }
+
+canvas {
+  position: fixed;
+  top:0;
+  left:0;
+  pointer-events:none;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Happy Birthday Baby 🎂</h1>
+<h2>Here is a lil quiz for you to get your lil gift 💌</h2>
+
+<button id="startBtn" onclick="startQuiz()">Let's Go 💌</button>
+
+<div id="quiz" class="hidden">
+
+  <div id="q1">
+    <p>What is your favourite moment of us?</p>
+    <textarea></textarea><br>
+    <button onclick="next(1)">Next</button>
+  </div>
+
+  <div id="q2" class="hidden">
+    <p>What are you grateful for in this 24 years of life?</p>
+    <textarea></textarea><br>
+    <button onclick="next(2)">Next</button>
+  </div>
+
+  <div id="q3" class="hidden">
+    <p>What are you looking forward in your coming years?</p>
+    <textarea></textarea><br>
+    <button onclick="finish()">Finish</button>
+  </div>
+
+</div>
+
+<!-- GIFT SECTION -->
+<div id="gift" class="hidden">
+
+  <div id="giftBox" onclick="openGift()" style="
+    width:200px;
+    height:200px;
+    margin: 0 auto;
+    background:url('giftbox.png') center/cover no-repeat;
+    cursor:pointer;
+  ">
+  </div>
+
+  <img src="catgift.jpg" alt="gift"
+       style="display:none; width:280px; border-radius:20px;
+       box-shadow:0 10px 20px rgba(0,0,0,0.2); margin-top:20px;">
+
+  <p style="margin-top:25px; font-size:18px;">
+    Happy Birthday Baby 💖<br><br>
+    Love you to the universe and back ✨
+  </p>
+
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+
+function startQuiz(){
+  document.getElementById("startBtn").style.display="none";
+  document.getElementById("quiz").classList.remove("hidden");
+}
+
+function next(n){
+  document.getElementById("q"+n).classList.add("hidden");
+  document.getElementById("q"+(n+1)).classList.remove("hidden");
+}
+
+function finish(){
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("gift").classList.remove("hidden");
+  confetti();
+}
+
+function openGift(){
+  document.getElementById("giftBox").style.display = "none";
+  document.getElementById("realGift").style.display = "block";
+  confetti();
+}
+
+// CONFETTI
+function confetti(){
+  let canvas=document.getElementById("confetti");
+  let ctx=canvas.getContext("2d");
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+
+  let pieces=[];
+  for(let i=0;i<120;i++){
+    pieces.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height,
+      size:Math.random()*6+4,
+      speed:Math.random()*3+2
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      ctx.fillStyle="#b76e79";
+      ctx.fillRect(p.x,p.y,p.size,p.size);
+      p.y+=p.speed;
+      if(p.y>canvas.height)p.y=0;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+</script>
+
+</body>
+</html>
