@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Baby</title>
+
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  background: linear-gradient(135deg, #fbe7e7, #f7c6c7);
+  color: #5a2a2a;
+  padding: 40px;
+}
+
+button {
+  padding: 12px 25px;
+  border-radius: 25px;
+  background: #b76e79;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.hidden { display: none; }
+
+textarea {
+  width:70%;
+  padding:10px;
+  border-radius:10px;
+}
+
+/* popup message */
+#popup {
+  position: fixed;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  z-index:1000;
+}
+
+/* gift animation */
+#giftBoxImg {
+  width:200px;
+  height:auto;
+  cursor:pointer;
+  margin-top:20px;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+  animation: float 1.5s infinite alternate ease-in-out;
+}
+
+#giftBoxImg:hover {
+  transform: scale(1.1);
+}
+
+@keyframes float {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-15px); }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Happy Birthday Baby 🎂</h1>
+<button onclick="startQuiz()">Start 💌</button>
+
+<div id="quiz" class="hidden">
+
+  <div id="q1">
+    <p>What is your favourite moment of us?</p>
+    <textarea></textarea><br>
+    <button onclick="showMessage(1)">Next</button>
+  </div>
+
+  <div id="q2" class="hidden">
+    <p>What are you grateful for in this 24 years of life?</p>
+    <textarea></textarea><br>
+    <button onclick="showMessage(2)">Next</button>
+  </div>
+
+  <div id="q3" class="hidden">
+    <p>What are you looking forward in your coming years?</p>
+    <textarea></textarea><br>
+    <button onclick="showMessage(3)">Next</button>
+  </div>
+
+</div>
+
+<!-- POPUP -->
+<div id="popup" class="hidden">
+  <p id="popupText"></p>
+  <button onclick="nextStep()">Continue 💖</button>
+</div>
+
+<!-- GIFT -->
+<div id="gift" class="hidden">
+  <img id="giftBoxImg" src="giftbox.png" onclick="openGift()">
+</div>
+
+<!-- FINAL -->
+<div id="final" class="hidden">
+  <img src="catgift.jpg" style="width:280px; border-radius:20px;">
+  <br>
+  <button onclick="showFinal()">For Sethu 💌</button>
+</div>
+
+<div id="finalMsg" class="hidden">
+  <p style="margin-top:20px; font-size:18px;">
+    Happy Birthday Baby 💖<br><br>
+    I love you so much. Thank you for being in my life, for loving me, for choosing me.
+    As imperfect as my life is, im grateful every second for you chosing me and staying. You're an answered prayer baby. I appreciate you every single day, night, week, month and even years bubs. I love you till dead do us apart. Love, Polayadi Monne
+  </p>
+</div>
+
+<script>
+
+let current = 0;
+
+const messages = {
+  1: "Omg same baby! Appo ithu love eh thaane Jessie?",
+  2: "Awww you're still mah lil baby and you're a walking blessing for everyone in your life",
+  3: "I wish you the best for coming years baby, and know the fact i'll be there during your ups and downs and every achievements and every rock bottom you hit. I'm not going anywhere, my love"
+};
+
+function startQuiz(){
+  document.querySelector("button").style.display="none";
+  document.getElementById("quiz").classList.remove("hidden");
+}
+
+function showMessage(step){
+  current = step;
+  document.getElementById("popupText").innerText = messages[step];
+  document.getElementById("popup").classList.remove("hidden");
+}
+
+function nextStep(){
+  document.getElementById("popup").classList.add("hidden");
+
+  document.getElementById("q"+current).classList.add("hidden");
+
+  if(current < 3){
+    document.getElementById("q"+(current+1)).classList.remove("hidden");
+  } else {
+    document.getElementById("quiz").classList.add("hidden");
+    document.getElementById("gift").classList.remove("hidden");
+  }
+}
+
+function openGift(){
+  document.getElementById("gift").classList.add("hidden");
+  document.getElementById("final").classList.remove("hidden");
+}
+
+function showFinal(){
+  document.getElementById("finalMsg").classList.remove("hidden");
+}
+
+</script>
+
+</body>
+</html>
