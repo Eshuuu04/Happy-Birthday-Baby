@@ -200,24 +200,26 @@ function showFinal(){
   document.getElementById("finalMsg").classList.remove("hidden");
 }
 function startCelebration(){
+  console.log("celebration started");
 
-  // clear old ones (important for GitHub reloads)
-  document.querySelectorAll('.balloon, .confetti').forEach(e => e.remove());
+  alert("celebration running");
 
-  // BALLOONS
-  for(let i=0;i<12;i++){
+  for(let i=0;i<10;i++){
     let b = document.createElement("div");
     b.className = "balloon";
-
     b.style.left = Math.random()*100 + "vw";
-    b.style.backgroundColor = ["#ff6b6b","#ffb6b9","#fcd5ce","#b76e79"][Math.floor(Math.random()*4)];
-    b.style.animationDuration = (4 + Math.random()*3) + "s";
-
+    b.style.background = "red";
     document.body.appendChild(b);
-
-    // FORCE reflow (this is the key fix)
-    b.offsetHeight;
   }
+
+  for(let i=0;i<10;i++){
+    let c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100 + "vw";
+    c.style.background = "blue";
+    document.body.appendChild(c);
+  }
+}
 
   // CONFETTI
   for(let i=0;i<50;i++){
