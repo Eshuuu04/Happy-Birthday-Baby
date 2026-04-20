@@ -2,89 +2,87 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Baby</title>
+<title>Birthday Quiz 💖</title>
 
 <style>
 body {
-  font-family: 'Segoe Script', cursive;
+  font-family: cursive;
   text-align: center;
-  background: linear-gradient(135deg, #fbe7e7, #f7c6c7);
-  color: #5a2a2a;
+  background: linear-gradient(135deg, #ffe3e3, #ffc6c6);
   padding: 40px;
   overflow-x: hidden;
 }
 
 button {
-  padding: 12px 25px;
-  border-radius: 25px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 20px;
   background: #b76e79;
   color: white;
-  border: none;
   cursor: pointer;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .hidden { display: none; }
 
 textarea {
-  width:70%;
-  padding:10px;
-  border-radius:10px;
-  border: none;
+  width: 70%;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-/* POPUP */
+/* popup */
 #popup {
   position: fixed;
-  top:50%;
-  left:50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%,-50%);
-  background:white;
-  padding:25px;
-  border-radius:15px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
-  z-index:1000;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  z-index: 10;
 }
 
-/* GIFT */
-#giftBoxImg {
-  width:200px;
-  cursor:pointer;
-  animation: float 1.5s infinite alternate ease-in-out;
+/* gift */
+#giftBox {
+  width: 180px;
+  cursor: pointer;
+  animation: float 1.5s infinite alternate;
 }
 
 @keyframes float {
   from { transform: translateY(0); }
-  to { transform: translateY(-15px); }
+  to { transform: translateY(-12px); }
 }
 
-/* BALLOONS */
+/* celebration */
+.balloon, .confetti {
+  position: fixed;
+  pointer-events: none;
+}
+
 .balloon {
-  position: fixed;
   bottom: -100px;
-  width: 35px;
-  height: 50px;
+  width: 30px;
+  height: 45px;
   border-radius: 50%;
-  animation: floatUp 6s linear infinite;
+  animation: rise 6s linear forwards;
 }
 
-@keyframes floatUp {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-120vh); }
+@keyframes rise {
+  to { transform: translateY(-120vh); }
 }
 
-/* CONFETTI */
 .confetti {
-  position: fixed;
   top: -10px;
   width: 8px;
   height: 8px;
-  animation: fall 4s linear infinite;
+  animation: fall 4s linear forwards;
 }
 
 @keyframes fall {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(100vh); }
+  to { transform: translateY(120vh); }
 }
 </style>
 </head>
@@ -98,22 +96,22 @@ textarea {
 <!-- QUIZ -->
 <div id="quiz" class="hidden">
 
-  <div id="q1">
+  <div class="q" id="q1">
     <p>What is your favourite moment of us?</p>
     <textarea></textarea><br>
-    <button onclick="showPopup(1)">Next</button>
+    <button onclick="next(1)">Next</button>
   </div>
 
-  <div id="q2" class="hidden">
+  <div class="q hidden" id="q2">
     <p>What are you grateful for in this 24 years of life?</p>
     <textarea></textarea><br>
-    <button onclick="showPopup(2)">Next</button>
+    <button onclick="next(2)">Next</button>
   </div>
 
-  <div id="q3" class="hidden">
+  <div class="q hidden" id="q3">
     <p>What are you looking forward in your coming years?</p>
     <textarea></textarea><br>
-    <button onclick="showPopup(3)">Finish</button>
+    <button onclick="finish()">Finish</button>
   </div>
 
 </div>
@@ -121,36 +119,33 @@ textarea {
 <!-- POPUP -->
 <div id="popup" class="hidden">
   <p id="popupText"></p>
-  <button onclick="nextStep()">Continue 💖</button>
+  <button onclick="closePopup()">Continue 💖</button>
 </div>
 
 <!-- GIFT -->
 <div id="gift" class="hidden">
-  <img id="giftBoxImg" src="giftbox.png" onclick="openGift()">
+  <img id="giftBox" src="giftbox.png" onclick="openGift()">
 </div>
 
 <!-- FINAL -->
 <div id="final" class="hidden">
-  <img src="catgift.jpg" style="width:280px;border-radius:20px;">
-  <br>
-  <button onclick="showFinal()">For Sethu 💌</button>
+  <img src="catgift.jpg" style="width:250px;border-radius:20px;">
+  <p>For Sethu 💌</p>
+  <button onclick="showFinal()">Open Message</button>
 </div>
 
 <div id="finalMsg" class="hidden">
-  <p style="margin-top:20px;font-size:18px;">
-    Happy Birthday Baby 💖<br><br>
-    I love you so much. You're my safe place, my peace, my everything.
-  </p>
+  <h3>I love you baby 💖</h3>
 </div>
 
 <script>
 
-let current = 0;
+let step = 1;
 
 const messages = {
   1: "Omg same baby! Appo ithu love eh thaane Jessie?",
-  2: "Awww you're still mah lil baby and you're a walking blessing for everyone in your life",
-  3: "I wish you the best for coming years baby. I'm not going anywhere, my love"
+  2: "Awww you're still my lil baby and a blessing 💖",
+  3: "I’ll always be there for you, no matter what 💌"
 };
 
 function startQuiz(){
@@ -158,21 +153,23 @@ function startQuiz(){
   document.getElementById("quiz").classList.remove("hidden");
 }
 
-/* SHOW POPUP */
-function showPopup(step){
-  current = step;
-  document.getElementById("popupText").innerText = messages[step];
+/* NEXT QUESTION + POPUP */
+function next(n){
+  step = n;
+
+  document.getElementById("popupText").innerText = messages[n];
   document.getElementById("popup").classList.remove("hidden");
+
+  document.getElementById("q"+n).classList.add("hidden");
 }
 
-/* MOVE NEXT */
-function nextStep(){
+/* CLOSE POPUP + GO NEXT */
+function closePopup(){
+
   document.getElementById("popup").classList.add("hidden");
 
-  document.getElementById("q"+current).classList.add("hidden");
-
-  if(current < 3){
-    document.getElementById("q"+(current+1)).classList.remove("hidden");
+  if(step < 3){
+    document.getElementById("q"+(step+1)).classList.remove("hidden");
   } else {
     document.getElementById("quiz").classList.add("hidden");
     document.getElementById("gift").classList.remove("hidden");
@@ -183,19 +180,18 @@ function nextStep(){
 function openGift(){
   document.getElementById("gift").classList.add("hidden");
   document.getElementById("final").classList.remove("hidden");
-  startCelebration();
+  celebration();
 }
 
-/* FINAL MESSAGE */
+/* FINAL */
 function showFinal(){
   document.getElementById("finalMsg").classList.remove("hidden");
 }
 
 /* CELEBRATION */
-function startCelebration(){
+function celebration(){
 
-  // balloons
-  for(let i=0;i<12;i++){
+  for(let i=0;i<15;i++){
     let b = document.createElement("div");
     b.className = "balloon";
     b.style.left = Math.random()*100 + "vw";
@@ -203,17 +199,21 @@ function startCelebration(){
     document.body.appendChild(b);
   }
 
-  // confetti
-  for(let i=0;i<50;i++){
+  for(let i=0;i<60;i++){
     let c = document.createElement("div");
     c.className = "confetti";
     c.style.left = Math.random()*100 + "vw";
-    c.style.background = ["#fff","#ffd166","#ff6b6b","#b76e79"][Math.floor(Math.random()*4)];
+    c.style.background = ["#fff","#ff6b6b","#ffd166","#b76e79"][Math.floor(Math.random()*4)];
     document.body.appendChild(c);
 
     setTimeout(()=>c.remove(),5000);
   }
 }
+
+</script>
+
+</body>
+</html>
 
 </script>
 
