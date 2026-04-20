@@ -64,6 +64,35 @@ textarea {
   from { transform: translateY(0px); }
   to { transform: translateY(-15px); }
 }
+/* balloons */
+.balloon {
+  position: fixed;
+  bottom: -100px;
+  width: 40px;
+  height: 50px;
+  border-radius: 50%;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-110vh); }
+}
+
+/* confetti */
+.confetti {
+  position: fixed;
+  top: -10px;
+  width: 8px;
+  height: 8px;
+  background: #b76e79;
+  animation: fall 4s linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
+}
 </style>
 </head>
 
@@ -157,12 +186,38 @@ function nextStep(){
 function openGift(){
   document.getElementById("gift").classList.add("hidden");
   document.getElementById("final").classList.remove("hidden");
+
+  startCelebration(); // 🎉 THIS TRIGGERS EVERYTHING
 }
 
 function showFinal(){
   document.getElementById("finalMsg").classList.remove("hidden");
 }
+function startCelebration(){
 
+  // BALLOONS
+  for(let i=0;i<10;i++){
+    let b = document.createElement("div");
+    b.classList.add("balloon");
+
+    b.style.left = Math.random()*100 + "vw";
+    b.style.background = ["#ff6b6b","#ffb6b9","#fcd5ce","#b76e79"][Math.floor(Math.random()*4)];
+    b.style.animationDuration = (4 + Math.random()*3) + "s";
+
+    document.body.appendChild(b);
+  }
+
+  // CONFETTI
+  for(let i=0;i<40;i++){
+    let c = document.createElement("div");
+    c.classList.add("confetti");
+
+    c.style.left = Math.random()*100 + "vw";
+    c.style.animationDuration = (2 + Math.random()*2) + "s";
+
+    document.body.appendChild(c);
+  }
+}
 </script>
 
 </body>
