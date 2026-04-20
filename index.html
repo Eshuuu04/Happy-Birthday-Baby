@@ -12,7 +12,10 @@ body {
   color: #5a2a2a;
   padding: 40px;
 }
-
+body {
+  position: relative;
+  overflow-x: hidden;
+}
 button {
   padding: 12px 25px;
   border-radius: 25px;
@@ -74,9 +77,6 @@ textarea {
   animation: floatUp 6s linear infinite;
   z-index: 9999;
   pointer-events: none;
-  body {
-  position: relative;
-  overflow-x: hidden;
 }
 
 @keyframes floatUp {
@@ -94,9 +94,6 @@ textarea {
   animation: fall 4s linear infinite;
   z-index: 9999;
   pointer-events: none;
-  body {
-  position: relative;
-  overflow-x: hidden;
 }
 
 @keyframes fall {
