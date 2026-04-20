@@ -193,17 +193,18 @@ function openGift(){
   document.getElementById("gift").classList.add("hidden");
   document.getElementById("final").classList.remove("hidden");
 
-  startCelebration(); // 🎉 THIS TRIGGERS EVERYTHING
+  startCelebration();
 }
 
 function showFinal(){
   document.getElementById("finalMsg").classList.remove("hidden");
 }
+
 function startCelebration(){
+
   console.log("celebration started");
 
-  alert("celebration running");
-
+  // BALLOONS
   for(let i=0;i<10;i++){
     let b = document.createElement("div");
     b.className = "balloon";
@@ -212,28 +213,15 @@ function startCelebration(){
     document.body.appendChild(b);
   }
 
-  for(let i=0;i<10;i++){
-    let c = document.createElement("div");
-    c.className = "confetti";
-    c.style.left = Math.random()*100 + "vw";
-    c.style.background = "blue";
-    document.body.appendChild(c);
-  }
-}
-
   // CONFETTI
   for(let i=0;i<50;i++){
     let c = document.createElement("div");
     c.className = "confetti";
-
     c.style.left = Math.random()*100 + "vw";
     c.style.backgroundColor = ["#b76e79","#ff6b6b","#ffd166","#ffffff"][Math.floor(Math.random()*4)];
-    c.style.animationDuration = (2 + Math.random()*2) + "s";
-
     document.body.appendChild(c);
 
-    // FORCE reflow
-    c.offsetHeight;
+    setTimeout(() => c.remove(), 5000);
   }
 }
 </script>
