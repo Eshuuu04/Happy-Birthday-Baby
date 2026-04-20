@@ -74,6 +74,9 @@ textarea {
   animation: floatUp 6s linear infinite;
   z-index: 9999;
   pointer-events: none;
+  body {
+  position: relative;
+  overflow-x: hidden;
 }
 
 @keyframes floatUp {
@@ -91,6 +94,9 @@ textarea {
   animation: fall 4s linear infinite;
   z-index: 9999;
   pointer-events: none;
+  body {
+  position: relative;
+  overflow-x: hidden;
 }
 
 @keyframes fall {
@@ -199,27 +205,37 @@ function showFinal(){
 }
 function startCelebration(){
 
+  // clear old ones (important for GitHub reloads)
+  document.querySelectorAll('.balloon, .confetti').forEach(e => e.remove());
+
   // BALLOONS
-  for(let i=0;i<10;i++){
+  for(let i=0;i<12;i++){
     let b = document.createElement("div");
-    b.classList.add("balloon");
+    b.className = "balloon";
 
     b.style.left = Math.random()*100 + "vw";
-    b.style.background = ["#ff6b6b","#ffb6b9","#fcd5ce","#b76e79"][Math.floor(Math.random()*4)];
+    b.style.backgroundColor = ["#ff6b6b","#ffb6b9","#fcd5ce","#b76e79"][Math.floor(Math.random()*4)];
     b.style.animationDuration = (4 + Math.random()*3) + "s";
 
     document.body.appendChild(b);
+
+    // FORCE reflow (this is the key fix)
+    b.offsetHeight;
   }
 
   // CONFETTI
-  for(let i=0;i<40;i++){
+  for(let i=0;i<50;i++){
     let c = document.createElement("div");
-    c.classList.add("confetti");
+    c.className = "confetti";
 
     c.style.left = Math.random()*100 + "vw";
+    c.style.backgroundColor = ["#b76e79","#ff6b6b","#ffd166","#ffffff"][Math.floor(Math.random()*4)];
     c.style.animationDuration = (2 + Math.random()*2) + "s";
 
     document.body.appendChild(c);
+
+    // FORCE reflow
+    c.offsetHeight;
   }
 }
 </script>
