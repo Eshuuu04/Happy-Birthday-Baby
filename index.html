@@ -105,7 +105,7 @@ textarea {
 <body>
 
 <h1>Happy Birthday Baby 🎂</h1>
-<button onclick="startQuiz()">Start 💌</button>
+<button id="startBtn" onclick="startQuiz()">Start 💌</button>
 
 <div id="quiz" class="hidden">
 
@@ -170,10 +170,9 @@ function startQuiz(){
   document.getElementById("quiz").classList.remove("hidden");
 }
 
-function showMessage(step){
-  current = step;
-  document.getElementById("popupText").innerText = messages[step];
-  document.getElementById("popup").classList.remove("hidden");
+function startQuiz(){
+  document.getElementById("startBtn").style.display = "none";
+  document.getElementById("quiz").classList.remove("hidden");
 }
 
 function nextStep(){
